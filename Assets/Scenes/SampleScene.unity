@@ -276,12 +276,9 @@ MonoBehaviour:
     type: 3}
   soilPlatfromPrefab: {fileID: 6171430534910508255, guid: 7e4c55f2601bf524b98c825178d672b0,
     type: 3}
-  plantspawner: {fileID: 0}
   platformCount: 50
-  isOuting: 0
+  spawnStartPoint: {x: -8, y: 5, z: 0}
   lastEndPoint: {x: 0, y: 0, z: 0}
-  spawnStartPoint: {x: -8, y: 4, z: 0}
-  lastStartPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &570215481
 MonoBehaviour:
   m_ObjectHideFlags: 0
