@@ -31,6 +31,18 @@ public class Character : MonoBehaviour
     public LayerMask platformLayerMask;
     public float isGrounedRaycastHeight = 0.5f;
 
+    [Header("Attack Values")]
+    public int Damage;
+    public float attackRange;
+    public bool canAttack = true;
+    public GameObject attackPoint;
+    public LayerMask targetLayer;
+
+
+    [Header("Plants")]
+    public bool isTriger = false;
+        
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,10 +66,25 @@ public class Character : MonoBehaviour
 
         Flip();
 
-        if (Input.GetKeyDown(KeyCode.Space)  && isGrounded())
+        if (Input.GetKeyDown(KeyCode.Space)  && isGrounded() && canAttack)
         {
             characterRigidbody.AddForce(Vector2.up * jumpSpeed);
         }
+
+        if (Input.GetMouseButtonDown(0) && isGrounded() && canAttack)
+        {
+            Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PlantTriger();
+        }
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            PlantTriger();
+        }
+
     }
 
     public void Flip()
@@ -106,5 +133,52 @@ public class Character : MonoBehaviour
             characterAnimator.SetBool("isJumping", true);
             characterAnimator.SetBool("isRunning", false);
         }
+    }
+
+
+     void Attack()
+    {
+        StartCoroutine("AttackDelay");
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
+    }
+
+    IEnumerator AttackDelay()
+    {
+        canAttack = false;
+        Collider2D[] hitResult = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, targetLayer);
+
+        if (hitResult != null)
+        {
+            characterAnimator.SetTrigger("isAttack");
+        }
+        yield return new WaitForSeconds(0.72f);
+        canAttack = true;
+        foreach (Collider2D hit in hitResult)
+        {
+            if (hit.GetComponent<Health>() != null)
+            {
+                Debug.Log("name:" + hit.transform.name);
+                hit.GetComponent<Health>().TakeDamage(Damage);
+            }
+        }
+    }
+
+
+
+    void PlantTriger()
+    {
+        GameObject[] Plants = GameObject.FindGameObjectsWithTag("Plant");
+        foreach(GameObject Plant in Plants)
+        {
+            Plant.GetComponent<BoxCollider2D>().isTrigger = !isTriger;
+            
+        }
+        isTriger = !isTriger;
     }
 }
