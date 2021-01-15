@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   isDead: 0
-  objectType: 1
+  objectType: 3
   LeafParticle: {fileID: 2314473652060849046}
 --- !u!1001 &4675663325446831699
 PrefabInstance:

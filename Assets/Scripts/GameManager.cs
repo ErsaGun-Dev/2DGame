@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Objects")]
     public GameObject PlatformSpawner;
     public GameObject character;
+    GameObject Character;
 
     [Header("Platform Spawner Value")]
     public Vector3 platfromStartPosition;
@@ -30,7 +31,8 @@ public class GameManager : MonoBehaviour
 
         GameObject Character = GameObject.Instantiate(character);
         Character.transform.position = new Vector3(SpawX, SpawY + 5, SpawZ);
-
         Debug.Log("Character Spawned");
     }
+
+    
 }

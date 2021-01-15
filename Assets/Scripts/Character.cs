@@ -22,12 +22,13 @@ public class Character : MonoBehaviour
     public int speed;
     public int jumpSpeed;
     public float moveInput;
-  
+
     [Header("Movement State")]
+    public bool canMovement = true;
     public bool isFlipX = false;
     public MovementState characterMovementState;
 
-    [Header("Raycast State")]
+    [Header("Raycast Value")]
     public LayerMask platformLayerMask;
     public float isGrounedRaycastHeight = 0.5f;
 
@@ -41,7 +42,13 @@ public class Character : MonoBehaviour
 
     [Header("Plants")]
     public bool isTriger = false;
-        
+
+
+    [Header("Envanter")]
+    public int wood;
+    public int fruit;
+    public int stick;
+    public int stone;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +61,10 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (canMovement)
+        {
+            Movement();
+        }
         handleAnimation();
     }
 
@@ -63,6 +73,8 @@ public class Character : MonoBehaviour
         moveInput = Input.GetAxis("Horizontal");
 
         characterRigidbody.velocity = new Vector2(moveInput * speed, characterRigidbody.velocity.y);
+
+      
 
         Flip();
 
@@ -165,6 +177,20 @@ public class Character : MonoBehaviour
             {
                 Debug.Log("name:" + hit.transform.name);
                 hit.GetComponent<Health>().TakeDamage(Damage);
+
+                    if(hit.GetComponent<Health>().objectType == Health.attackableObjectType.Tree)
+                    {
+                        wood += 5;
+                    }
+                    else if (hit.GetComponent<Health>().objectType == Health.attackableObjectType.Bush)
+                    {
+                        stick += 2;
+                      
+                    }
+                    else if (hit.GetComponent<Health>().objectType == Health.attackableObjectType.Rock)
+                    {
+                        stone += 3;
+                    }
             }
         }
     }

@@ -8,7 +8,9 @@ public class Health : MonoBehaviour
     public enum attackableObjectType
     {
         Player, 
-        Plant,
+        Tree,
+        Rock,
+        Bush,
         Enemy
     }
 
@@ -32,13 +34,14 @@ public class Health : MonoBehaviour
         if (!isDead)
         {
             health -= damage;
-            if(objectType == attackableObjectType.Plant)
+            if(objectType == attackableObjectType.Tree || objectType == attackableObjectType.Rock || objectType == attackableObjectType.Bush)
             {
                 this.gameObject.transform.DOShakePosition(0.15f, new Vector3(0.4f,0,0), 10, 90);
                 LeafParticle.Play();
                 Tween colorTween = spriteRenderer.DOBlendableColor(new Color(231f, 76f, 60f,0.75f), 0.1f);
                 colorTween.OnComplete(() => spriteRenderer.DOBlendableColor(Color.white, 0.05f));
             }
+
             isDeadControl();
         }
     }
@@ -50,9 +53,13 @@ public class Health : MonoBehaviour
         {
             health = 0;
             isDead = true;
-            Tween colorTween = spriteRenderer.DOBlendableColor(Color.red, 0.1f);
-            colorTween.OnComplete(() => this.gameObject.SetActive(false));
-           
+
+            if (objectType == attackableObjectType.Tree || objectType == attackableObjectType.Rock || objectType == attackableObjectType.Bush)
+            {
+                Tween colorTween = spriteRenderer.DOBlendableColor(Color.red, 0.1f);
+                colorTween.OnComplete(() => this.gameObject.SetActive(false));
+            }
+             
         }
     }
 

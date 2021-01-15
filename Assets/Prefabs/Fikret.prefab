@@ -132,12 +132,18 @@ MonoBehaviour:
   speed: 7
   jumpSpeed: 600
   moveInput: 0
+  canMovement: 1
   isFlipX: 1
   characterMovementState: 0
   platformLayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   isGrounedRaycastHeight: 0.5
+  climbingPoint: {fileID: 1506939895629432157}
+  climbingLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  climbingRange: 0.5
   Damage: 6
   attackRange: 0.4
   canAttack: 1
@@ -146,6 +152,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   isTriger: 0
+  wood: 0
+  fruit: 0
+  stick: 0
+  stone: 0
 --- !u!114 &4586788293103999410
 MonoBehaviour:
   m_ObjectHideFlags: 0
